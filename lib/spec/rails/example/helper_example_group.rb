@@ -97,6 +97,10 @@ module Spec
           self.class.helper
         end
         
+        def reset_helper_object
+          self.class.instance_variable_set(:@helper_object,nil)
+        end
+        
         def orig_assigns
           helper.assigns
         end
@@ -119,7 +123,9 @@ module Spec
           session['flash'] = @flash
 
           ActionView::Helpers::AssetTagHelper::reset_javascript_include_default
-          
+
+          reset_helper_object
+
           helper.session = session
           helper.request = @request
           helper.flash = flash
